@@ -1,4 +1,4 @@
-import { View, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import TopButtons from "../components/TopButtons";
 
 export default function BackgroundImage() {
@@ -12,10 +12,11 @@ export default function BackgroundImage() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   imageWrapper: {
     width: "100%",
-    height: 320,
+    height: 400,
     position: "relative",
   },
   headerImage: {

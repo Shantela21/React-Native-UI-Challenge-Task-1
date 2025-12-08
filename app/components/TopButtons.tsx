@@ -1,13 +1,27 @@
-import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+
 export default function TopButtons() {
+  const [isLiked, setIsLiked] = useState(false);
+
   return (
     <View style={styles.topButtons}>
-      <TouchableOpacity style={styles.circleBtn}>
+      <TouchableOpacity 
+        style={styles.circleBtn}
+        onPress={() => console.log("Back button pressed")}
+      >
         <Ionicons name="chevron-back" size={22} color="black" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.circleBtn}>
-        <Ionicons name="heart-outline" size={22} color="black" />
+      <TouchableOpacity 
+        style={[styles.circleBtn, isLiked && styles.likedBtn]}
+        onPress={() => setIsLiked(!isLiked)}
+      >
+        <Ionicons 
+          name={isLiked ? "heart" : "heart-outline"} 
+          size={22} 
+          color={isLiked ? "#FF6B6B" : "black"} 
+        />
       </TouchableOpacity>
     </View>
   );
@@ -29,5 +43,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 4,
+  },
+  likedBtn: {
+    backgroundColor: "#FFF5F5",
   },
 });
