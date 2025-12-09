@@ -15,7 +15,7 @@ export default function RioDestinationInfo() {
             <Text style={styles.countryText}>Brazil</Text>
           </View>
           <View style={styles.ratingRow}>
-            <Ionicons name="star" size={16} color="#FFA500" />
+            <Ionicons name="star-outline" size={16} color="#black" />
             <Text style={styles.ratingText}>5.0</Text>
           </View>
           <TouchableOpacity>

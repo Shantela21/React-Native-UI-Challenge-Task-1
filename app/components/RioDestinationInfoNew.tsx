@@ -1,10 +1,44 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import {
+  Image,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function RioDestinationInfoNew() {
   const [isExpanded, setIsExpanded] = useState(false);
-    const [isLiked, setIsLiked] = useState(false);
+  const [likedTours, setLikedTours] = useState<Record<string, boolean>>({});
+
+  const toggleLike = (tourId: string) => {
+    setLikedTours((prev) => ({
+      ...prev,
+      [tourId]: !prev[tourId],
+    }));
+  };
+
+  const tours = [
+    {
+      id: "tour1",
+      title: "Iconic Brazil",
+      duration: "8 days • from $659/person",
+      rating: 4.6,
+      reviews: 56,
+      image: require("../../assets/images/card 1.webp"),
+    },
+    {
+      id: "tour2",
+      title: "Beach",
+      duration: "8 days",
+      rating: 4.8,
+      reviews: 61,
+      image: require("../../assets/images/card 2.jpg"),
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -12,20 +46,14 @@ export default function RioDestinationInfoNew() {
         <View style={styles.locationRow}>
           <Text style={styles.destinationTitle}>Rio de Janeiro</Text>
           <View style={styles.ratingContainer}>
-            <Ionicons name="star" size={16} color="#FFA500" />
+            <Ionicons name="star-outline" size={16} color="black" />
             <Text style={styles.ratingText}>5.0</Text>
           </View>
         </View>
 
         <View style={styles.locationRow}>
           <View style={styles.locationInfo}>
-            <View style={styles.flagContainer}>
-              <View style={styles.flag}>
-                <View style={styles.greenBackground} />
-                <View style={styles.yellowDiamond} />
-                <View style={styles.blueCircle} />
-              </View>
-            </View>
+            <Flag isoCode="BR" size={25} round />
             <Text style={styles.countryText}>Brazil</Text>
           </View>
           <View style={styles.ratingRow}>
@@ -66,73 +94,46 @@ export default function RioDestinationInfoNew() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.toursContainer}
           >
-            <View style={styles.tourCard}>
-              <View style={styles.tourImageContainer}>
-                <Image
-                  source={require("../../assets/images/card 1.webp")}
-                  style={styles.tourImage}
-                />
-                  <TouchableOpacity 
-                        style={[styles.heartButton, isLiked && styles.likedBtn]}
-                        onPress={() => setIsLiked(!isLiked)}
-                      >
-                        <Ionicons 
-                          name={isLiked ? "heart" : "heart-outline"} 
-                          size={22} 
-                          color={isLiked ? "#FF6B6B" : "black"} 
-                        />
-                      </TouchableOpacity>
-              </View>
-              <View style={styles.tourContent}>
-                <Text style={styles.tourTitle}>Iconic Brazil</Text>
-                <Text style={styles.tourDuration}>
-                  8 days • from $659/person
-                </Text>
-                <View style={styles.tourFooter}>
-                  <View style={styles.tourRating}>
-                    <Text style={styles.tourRatingText}>4.6</Text>
-                    <Ionicons name="star" size={14} color="#FFA500" />
-                    <Text style={styles.tourReviewsText}>56 reviews</Text>
-                  </View>
-                  <TouchableOpacity style={styles.navButton}>
+            {tours.map((tour) => (
+              <View key={tour.id} style={styles.tourCard}>
+                <View style={styles.tourImageContainer}>
+                  <Image source={tour.image} style={styles.tourImage} />
+                  <TouchableOpacity
+                    style={[
+                      styles.heartButton,
+                      likedTours[tour.id] && styles.likedBtn,
+                    ]}
+                    onPress={() => toggleLike(tour.id)}
+                  >
                     <Ionicons
-                      name="chevron-forward"
-                      size={16}
-                      color="#FFFFFF"
+                      name={likedTours[tour.id] ? "heart" : "heart-outline"}
+                      size={22}
+                      color={likedTours[tour.id] ? "#FF6B6B" : "black"}
                     />
                   </TouchableOpacity>
                 </View>
-              </View>
-            </View>
-
-            <View style={styles.tourCard}>
-              <View style={styles.tourImageContainer}>
-                <Image
-                  source={require("../../assets/images/card 2.jpg")}
-                  style={styles.tourImage}
-                />
-                <TouchableOpacity style={styles.heartButton}>
-                  <Ionicons name="heart-outline" size={20} color="#FFFFFF" />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.tourContent}>
-                <Text style={styles.tourTitle}>Beach</Text>
-                <Text style={styles.tourDuration}>8 days</Text>
-                <View style={styles.tourFooter}>
-                  <View style={styles.tourRating}>
-                    <Text style={styles.tourRatingText}>4.8</Text>
-                    <Ionicons name="star" size={14} color="#FFA500" />
+                <View style={styles.tourContent}>
+                  <Text style={styles.tourTitle}>{tour.title}</Text>
+                  <Text style={styles.tourDuration}>{tour.duration}</Text>
+                  <View style={styles.tourFooter}>
+                    <View style={styles.tourRating}>
+                      <Text style={styles.tourRatingText}>{tour.rating}</Text>
+                      <Ionicons name="star-outline" size={14} color="black" />
+                      <Text style={styles.tourReviewsText}>
+                        {tour.reviews} reviews
+                      </Text>
+                    </View>
+                    <TouchableOpacity style={styles.navButton}>
+                      <Ionicons
+                        name="chevron-forward"
+                        size={16}
+                        color="#FFFFFF"
+                      />
+                    </TouchableOpacity>
                   </View>
-                  <TouchableOpacity style={styles.navButton}>
-                    <Ionicons
-                      name="chevron-forward"
-                      size={16}
-                      color="#FFFFFF"
-                    />
-                  </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            ))}
           </ScrollView>
         </View>
       </View>
@@ -140,19 +141,39 @@ export default function RioDestinationInfoNew() {
   );
 }
 
+// ---------------- Flag Component ----------------
+interface FlagProps {
+  isoCode: string;
+  size: number;
+  round?: boolean;
+}
+
+const Flag: React.FC<FlagProps> = ({ isoCode, size, round = false }) => {
+  const borderRadius = round ? size / 2 : 4;
+  return (
+    <View
+      style={[
+        styles.flagContainer,
+        { width: size, height: size, borderRadius: borderRadius },
+      ]}
+    >
+      <ImageBackground
+        style={[styles.flag, { borderRadius: borderRadius }]}
+        source={{ uri: `https://flagsapi.com/${isoCode}/flat/64.png` }}
+      />
+    </View>
+  );
+};  
+
+// ---------------- Styles ----------------
 const styles = StyleSheet.create({
-  container: {
-    marginTop: -120,
-  },
+  container: { marginTop: -120 },
   destinationCard: {
     backgroundColor: "#FFFFFF",
     borderRadius: 20,
     padding: 20,
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,
@@ -169,51 +190,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 16,
   },
-  locationInfo: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  flagContainer: {
-    marginRight: 8,
-  },
-  flag: {
-    width: 20,
-    height: 14,
-    borderRadius: 2,
-    overflow: "hidden",
-  },
-  greenBackground: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#009739",
-  },
-  yellowDiamond: {
-    position: "absolute",
-    width: 12,
-    height: 8,
-    backgroundColor: "#FEDD00",
-    transform: [{ rotate: "45deg" }],
-    left: 4,
-    top: 3,
-  },
-  blueCircle: {
-    position: "absolute",
-    width: 6,
-    height: 6,
-    backgroundColor: "#012169",
-    borderRadius: 3,
-    left: 7,
-    top: 4,
-  },
-  countryText: {
-    fontSize: 16,
-    color: "#4A5568",
-  },
-  ratingRow: {
-    flexDirection: "column",
-    alignItems: "flex-end",
-  },
+  locationInfo: { flexDirection: "row", alignItems: "center" },
+  countryText: { fontSize: 16, color: "#4A5568", marginLeft: 8 },
+  ratingRow: { flexDirection: "column", alignItems: "flex-end" },
   ratingContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -236,46 +215,25 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     marginLeft: 8,
   },
-  descriptionContainer: {
-    marginTop: 8,
-  },
-  descriptionText: {
-    fontSize: 14,
-    lineHeight: 20,
-    color: "#4A5568",
-  },
+  descriptionContainer: { marginTop: 8 },
+  descriptionText: { fontSize: 14, lineHeight: 20, color: "#4A5568" },
   readMoreText: {
     fontSize: 14,
     color: "#3182CE",
     fontWeight: "500",
     marginTop: 8,
   },
-  upcomingToursSection: {
-    marginTop: 24,
-  },
+  upcomingToursSection: { marginTop: 24 },
   toursHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 16,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#1A202C",
-  },
-  seeAllButton: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  seeAllText: {
-    fontSize: 14,
-    color: "#3182CE",
-    marginRight: 4,
-  },
-  toursContainer: {
-    paddingRight: 20,
-  },
+  sectionTitle: { fontSize: 24, fontWeight: "bold", color: "#1A202C" },
+  seeAllButton: { flexDirection: "row", alignItems: "center" },
+  seeAllText: { fontSize: 14, color: "#3182CE", marginRight: 4 },
+  toursContainer: { paddingRight: 20 },
   tourCard: {
     width: 280,
     marginRight: 16,
@@ -283,14 +241,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: "hidden",
   },
-  tourImageContainer: {
-    position: "relative",
-  },
-  tourImage: {
-    width: "100%",
-    height: 140,
-    resizeMode: "cover",
-  },
+  tourImageContainer: { position: "relative" },
+  tourImage: { width: "100%", height: 140, resizeMode: "cover" },
   heartButton: {
     position: "absolute",
     top: 10,
@@ -302,40 +254,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  tourContent: {
-    padding: 16,
-  },
+  tourContent: { padding: 16 },
   tourTitle: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#1A202C",
     marginBottom: 4,
   },
-  tourDuration: {
-    fontSize: 14,
-    color: "#4A5568",
-    marginBottom: 12,
-  },
+  tourDuration: { fontSize: 14, color: "#4A5568", marginBottom: 12 },
   tourFooter: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  tourRating: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
+  tourRating: { flexDirection: "row", alignItems: "center" },
   tourRatingText: {
     fontSize: 14,
     fontWeight: "600",
     color: "#1A202C",
     marginRight: 4,
   },
-  tourReviewsText: {
-    fontSize: 12,
-    color: "#718096",
-    marginLeft: 4,
-  },
+  tourReviewsText: { fontSize: 12, color: "#718096", marginLeft: 4 },
   navButton: {
     width: 32,
     height: 32,
@@ -344,7 +283,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  likedBtn: {
-    backgroundColor: "#FFF5F5",
-  },
+
+  likedBtn: { backgroundColor: "#FFF5F5" },
+  flagContainer: { marginRight: 8, borderRadius: 10 },
+  flag: { width: 35, height: 35, borderRadius: 25, resizeMode: "contain"},
 });

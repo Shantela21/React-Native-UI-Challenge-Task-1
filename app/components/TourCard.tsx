@@ -47,12 +47,12 @@ export default function TourCard({
           <View style={styles.cardFooter}>
             <View style={styles.ratingContainer}>
               <Text style={styles.ratingText}>{rating}</Text>
-              <Ionicons name="star" size={14} color="#FFA500" />
+              <Ionicons name="star" size={14} color="#black" />
               <Text style={styles.reviewsText}>{reviews} reviews</Text>
             </View>
             
             <TouchableOpacity style={styles.navButton}>
-              <Ionicons name="chevron-forward" size={16} color="#FFFFFF" />
+              <Ionicons name="chevron-forward" size={20} color="black" />
             </TouchableOpacity>
           </View>
         </View>
@@ -91,13 +91,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 10,
     right: 10,
-    width: 40,
-    height: 40,
-    backgroundColor: "white",
-    borderRadius: 50,
+    width: 32,
+    height: 32,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
-    elevation: 4,
   },
   cardContent: {
     padding: 16,
@@ -134,15 +133,12 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   navButton: {
-    width: 32,
-    height: 32,
-    backgroundColor: "#2D3748",
-    borderRadius: 16,
+    width: 40,
+    height: 40,
+    backgroundColor: "white",
+    borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
+    elevation: 4,
   },
-  likedHeartBtn: {
-  backgroundColor: "#FFF5F5",
-},
-
 });
