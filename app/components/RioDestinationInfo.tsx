@@ -17,10 +17,10 @@ export default function RioDestinationInfo() {
           <View style={styles.ratingRow}>
             <Ionicons name="star" size={16} color="#FFA500" />
             <Text style={styles.ratingText}>5.0</Text>
-            <TouchableOpacity>
-              <Text style={styles.reviewsText}>143 reviews</Text>
-            </TouchableOpacity>
           </View>
+          <TouchableOpacity>
+            <Text style={styles.reviewsText}>143 reviews</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.descriptionContainer}>
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     marginTop: -30,
+   
   },
   destinationCard: {
     backgroundColor: "#FFFFFF",
@@ -91,6 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#1A202C",
     marginRight: 4,
+    
   },
   reviewsText: {
     fontSize: 14,

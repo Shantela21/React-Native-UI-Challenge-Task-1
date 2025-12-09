@@ -91,12 +91,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 10,
     right: 10,
-    width: 32,
-    height: 32,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
-    borderRadius: 16,
+    width: 40,
+    height: 40,
+    backgroundColor: "white",
+    borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
+    elevation: 4,
   },
   cardContent: {
     padding: 16,
@@ -140,4 +141,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  likedHeartBtn: {
+  backgroundColor: "#FFF5F5",
+},
+
 });
