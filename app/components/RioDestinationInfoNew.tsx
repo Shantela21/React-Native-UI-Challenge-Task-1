@@ -1,13 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
-  Image,
-  ImageBackground,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
 } from "react-native";
 
 export default function RioDestinationInfoNew() {
@@ -150,6 +149,7 @@ interface FlagProps {
 
 const Flag: React.FC<FlagProps> = ({ isoCode, size, round = false }) => {
   const borderRadius = round ? size / 2 : 4;
+  
   return (
     <View
       style={[
@@ -157,9 +157,9 @@ const Flag: React.FC<FlagProps> = ({ isoCode, size, round = false }) => {
         { width: size, height: size, borderRadius: borderRadius },
       ]}
     >
-      <ImageBackground
-        style={[styles.flag, { borderRadius: borderRadius }]}
-        source={{ uri: `https://flagsapi.com/${isoCode}/flat/64.png` }}
+      <Image
+        style={[styles.flag, { width: size, height: size, borderRadius: borderRadius }]}
+        source={{ uri: `https://flagcdn.com/w80/${isoCode.toLowerCase()}.png` }}
       />
     </View>
   );
@@ -286,5 +286,5 @@ const styles = StyleSheet.create({
 
   likedBtn: { backgroundColor: "#FFF5F5" },
   flagContainer: { marginRight: 8, borderRadius: 10 },
-  flag: { width: 35, height: 35, borderRadius: 25, resizeMode: "contain"},
+  flag: { width: 35, height: 35, borderRadius: 25, resizeMode: "contain" },
 });
