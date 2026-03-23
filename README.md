@@ -37,7 +37,7 @@ react-native-task-1/
 ## Installation
 1. Clone the repository:
 ```
-git clone https://github.com/your-username/react-native-task-1.git
+git clone https://github.com/Shantela21/react-native-task-1.git
 ```
 ```
 cd react-native-task-1
